@@ -39,6 +39,13 @@ class HomeController extends Controller
         // move image to public space
         $file->move(public_path('images'), $md5 . '.png');
 
+        /*
+         * could also save as use id to auto clean up old images.
+         * just remember to update the home.blade.php img tag to look like this
+         * <img src="{{asset('images/' . auth()->id()) }}.png" alt="{{auth()->user()->image_name}}"/>
+         */
+//        $file->move(public_path('images'), auth()->id() . '.png');
+
         // save image stuff
         auth()->user()->update(['image_md5_sum' => $md5, 'image_name' => $file->getClientOriginalName()]);
 
