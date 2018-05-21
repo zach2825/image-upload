@@ -14,8 +14,8 @@ class AddImageNameToUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('image_md5_sum');
-            $table->string('image_name');
+            $table->string('image_md5_sum')->nullable();
+            $table->string('image_name')->nullable();
         });
     }
 
