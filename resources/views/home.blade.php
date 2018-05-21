@@ -21,7 +21,7 @@
 
                         <button type="submit">Save</button>
                     </form>
-                    <img src="{{asset('images/' . auth()->id())}}.png" />
+                    <img src="{{asset('images/' . auth()->user()->image_md5_sum)}}.png" alt="{{auth()->user()->image_name}}"/>
                 </div>
             </div>
         </div>

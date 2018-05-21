@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
@@ -29,8 +29,18 @@ class HomeController extends Controller
     public function save()
     {
         $file = request()->file('image');
+        $md5  = md5_file($file->path());
 
-        $test = $file->move(public_path('images'), auth()->id() . '.png');
+        // cleanup
+        if (auth()->user()->image_md5_sum) {
+            Storage::delete(auth()->user()->image_md5_sum . '.png');
+        }
+
+        // move image to public space
+        $file->move(public_path('images'), $md5 . '.png');
+
+        // save image stuff
+        auth()->user()->update(['image_md5_sum' => $md5, 'image_name' => $file->getClientOriginalName()]);
 
         return redirect()->back();
     }
