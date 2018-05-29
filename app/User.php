@@ -31,4 +31,8 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function images(){
+        return $this->belongsToMany(Image::class, 'user_images', 'user_id', 'id');
+    }
 }
